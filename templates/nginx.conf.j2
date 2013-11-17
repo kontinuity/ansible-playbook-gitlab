@@ -1,14 +1,10 @@
-# GITLAB
-# Maintainer: @randx
-# App Version: 5.1
-
 upstream gitlab {
   server unix:///home/git/gitlab/tmp/sockets/gitlab.socket;
 }
 
 server {
-  listen *:80 default_server;         # e.g., listen 192.168.1.1:80;
-  server_name {{ domain_name }};     # e.g., server_name source.example.com;
+  listen 80;
+  server_name {{ domain_name }};
   root /home/git/gitlab/public;
 
   # individual nginx logs for this gitlab vhost
