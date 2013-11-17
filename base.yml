@@ -1,0 +1,21 @@
+---
+- hosts: gitlab
+  vars_files:
+    - vars.yml
+  tasks:
+    - name: ensure user ubuntu is present
+      user: name=ubuntu generate_ssh_key=yes ssh_key_bits=2048
+    - name: authorize me to ubuntu
+      authorized_key: user=ubuntu key="{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+    - name: authorize me to root
+      authorized_key: user=root key="{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+    - name: update apt-cache
+      command: apt-get update
+    - name: ensure python-apt is present
+      command: apt-get install python-apt -y
+    - name: update sudoers
+      template: src=templates/sudoers.j2 dest=/etc/sudoers owner=root mode=0600
+    - name: stop apache2 service
+      service: name=apache2 state=started
+    - name: uninstall apache2
+      apt: pkg=apache2 state=absent purge=yes
