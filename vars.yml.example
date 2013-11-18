@@ -1,3 +1,4 @@
 ---
 domain_name: gitlab.dev # This is an FQDN, for example: google.com, foo.com
+host_aliases: another_domain.com # Because we override /etc/hosts file
 database_password: secrete
