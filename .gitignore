@@ -1,3 +1,5 @@
 vars.yml
 *.hosts
+*.key
+*.crt
 

@@ -238,6 +238,12 @@
       file: state=absent path=/etc/nginx/sites-enabled/default
     - name: ensure GitLab Nginx site is enabled
       file: state=link src=/etc/nginx/sites-available/gitlab path=/etc/nginx/sites-enabled/gitlab
+    - name: ensure ssl directory
+      file: path=/etc/nginx/ssl owner=root group=root state=directory
+    - name: ensure redmine cert crt
+      template: src=templates/$domain_name.crt dest=/etc/nginx/ssl/$domain_name.crt    
+    - name: ensure redmine cert key
+      template: src=templates/$domain_name.key dest=/etc/nginx/ssl/$domain_name.key
 
 - hosts: gitlab
   sudo: yes
